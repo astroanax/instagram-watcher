@@ -1,0 +1,12 @@
+# Instagram profile watcher
+
+watches new followers and following of a profile.
+
+to add a profile, use `add.py user_id username`. find user_id using devtools or some other website.
+
+you will need to fill in the setting.json using your browser data in the following way - 
+
+```{"cookie": "xxxx", "x-asbd-id": "xxxx", "x-csrftoken": "xxxx", "x-ig-app-id": "xxxx", "x-ig-www-claim": "xxxxx"}```
+
+
+new follows/follwing are logged to watcher.log
