@@ -3,13 +3,14 @@ import json
 import json
 import logging
 import relations
+import copy
 
 try:
     logging.basicConfig(
         filename="watcher.log",
         filemode='a',
         format='%(asctime)s,%(msecs)d %(name)s %(levelname)s %(message)s',
-        datefmt='%H:%M:%S',
+        datefmt='%m/%d/%Y %I:%M:%S %p',
         level=logging.INFO
         )
 except:
@@ -27,6 +28,7 @@ def fetch(relation, URL, headers, db, username):
     if not relation in db:
         db[relation] = {}
     response = None
+    users = {}
     while response is None or "next_max_id" in response:
         if response is not None:
             max_id = "&max_id=" + response["next_max_id"]
@@ -34,14 +36,21 @@ def fetch(relation, URL, headers, db, username):
         r = requests.get(URL + max_id, headers=headers)
         response = json.loads(r.text)
         for user in response['users']:
-            if not user["pk"] in db[relation]:
-                db[relation][user["pk"]] = {"name": user["full_name"], "username": user["username"]}
+            users[user["pk_id"]] = {"name": user["full_name"], "username": user["username"]}
+            if not user["pk_id"] in db[relation]:
+                db[relation][user["pk_id"]] = {"name": user["full_name"], "username": user["username"]}
                 logging.info("new " + relation + " - " + user["full_name"] + " - " + user["username"] + " for " + username)
             else:
-                if user["username"] != db[relation][user["pk"]]["username"]:
-                    db[relation][user["pk"]]["username"] = user["username"]
-                if user["full_name"] != db[relation][user["pk"]]["name"]:
-                    db[relation][user["pk"]]["name"] = user["full_name"]
+                if user["username"] != db[relation][user["pk_id"]]["username"]:
+                    db[relation][user["pk_id"]]["username"] = user["username"]
+                if user["full_name"] != db[relation][user["pk_id"]]["name"]:
+                    db[relation][user["pk_id"]]["name"] = user["full_name"]
+
+    db1 = copy.deepcopy(db)
+    for user in db1[relation]:
+        if user not in users:
+            logging.info("removed " + relation + " - " + db1[relation][user]["name"] + " - " + db1[relation][user]["username"] + " for " + username)
+            del db[relation][user]
     return db
 
 
