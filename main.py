@@ -1,6 +1,6 @@
 import requests
 import json
-import json
+import time
 import logging
 import relations
 import copy
@@ -45,6 +45,7 @@ def fetch(relation, URL, headers, db, username):
                     db[relation][user["pk_id"]]["username"] = user["username"]
                 if user["full_name"] != db[relation][user["pk_id"]]["name"]:
                     db[relation][user["pk_id"]]["name"] = user["full_name"]
+        time.sleep(1)
 
     db1 = copy.deepcopy(db)
     for user in db1[relation]:
