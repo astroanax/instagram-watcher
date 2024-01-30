@@ -4,7 +4,7 @@ settings = json.load(open("settings.json", "r"))
 class relation:
     def __init__(self, t, user_id, username):
         self.type = t
-        self.URL = "https://www.instagram.com/api/v1/friendships/" + user_id + "/" + t + "/?count=12"
+        self.URL = "https://www.instagram.com/api/v1/friendships/" + user_id + "/" + t + "/?count=100"
         self.headers = {
                 'authority': 'www.instagram.com',
                 'accept': '*/*', 
