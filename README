@@ -6,7 +6,7 @@ to add a profile, use `add.py user_id username`. find user_id using devtools or 
 
 you will need to fill in the setting.json using your browser data in the following way - 
 
-```{"cookie": "xxxx", "x-asbd-id": "xxxx", "x-csrftoken": "xxxx", "x-ig-app-id": "xxxx", "x-ig-www-claim": "xxxxx"}```
+```{"stalker_username":{"cookie": "xxxx", "x-asbd-id": "xxxx", "x-csrftoken": "xxxx", "x-ig-app-id": "xxxx", "x-ig-www-claim": "xxxxx"}}```
 
 
 new follows/follwing are logged to watcher.log

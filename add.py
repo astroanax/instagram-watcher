@@ -11,9 +11,9 @@ except:
     with open('db.json', 'w') as f:
         json.dump(db, f)
 try:
-    db[sys.argv[1]] = {"username": sys.argv[2], "db": {}}
+    db[sys.argv[1]] = {"stalker": sys.argv[3], "username": sys.argv[2], "db": {}}
     json.dump(db, open("db.json", "w"))
     print("added user_id ", sys.argv[1], " with username ", sys.argv[2])
 except:
-    print("usage: add.py user_id username", file=sys.stderr)
+    print("usage: add.py user_id username stalker_username", file=sys.stderr)
     exit(1)
